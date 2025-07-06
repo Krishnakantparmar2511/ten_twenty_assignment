@@ -38,7 +38,7 @@ export const MainCarousel: React.FC = () => {
         <div className="absolute inset-0 flex items-center justify-start text-center z-10 px-6 md:px-32">
           <div className="">
             <p
-              className={`text-light text-start text-sm md:text-base mb-4 md:mb-6 font-worksans leading-tight transform transition-all duration-1000 ease-out delay-300 ${
+              className={`text-light text-start text-sm md:text-base mb-4 md:mb-6 font-worksans leading-tight transform transition-all duration-1000 ease-out delay-100 ${
                 state.isLoaded
                   ? "translate-y-0 opacity-100"
                   : "translate-y-16 opacity-0"
@@ -47,7 +47,7 @@ export const MainCarousel: React.FC = () => {
               Welcome To TenTwenty Farms
             </p>
             <h1
-              className={`text-light text-start text-[46px] md:text-[64px] font-worksans leading-tight transform transition-all duration-1000 ease-out ${
+              className={`text-light text-start text-[46px] md:text-[64px] font-worksans leading-tight transform transition-all duration-1000 ease-out delay-200 ${
                 state.isLoaded
                   ? "translate-y-0 opacity-100"
                   : "translate-y-16 opacity-0"
