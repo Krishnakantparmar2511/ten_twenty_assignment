@@ -6,9 +6,6 @@ import { mainCarouselImages } from "core/utils/constants/constants";
 export const MainCarousel: React.FC = () => {
   const { state, nextIndex, nextImage } = useMainCarouselState();
 
-  // Calculate the display index - show next index during transition
-  const displayIndex = state.isTransitioning ? state.nextImageIndex : state.currentIndex;
-
   return (
     <div className="relative w-full h-screen overflow-hidden">
       {/* NAVBAR */}
@@ -150,7 +147,7 @@ export const MainCarousel: React.FC = () => {
 
           <div className="flex items-center space-x-[17px] text-light ml-[33px]">
             <span className="text-xs md:text-sm font-light font-worksans">
-              {String(displayIndex + 1).padStart(2, "0")}
+              {String(state.currentIndex + 1).padStart(2, "0")}
             </span>
             <div className="w-[100px] h-px bg-light"></div>
             <span className="text-xs md:text-sm">

@@ -82,7 +82,7 @@ export const Navbar: React.FC = () => {
 
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 z-50 bg-black/50 md:hidden"
+          className="fixed inset-0 z-20 bg-black/50 md:hidden"
           onClick={toggleMobileMenu}
         >
           <div
