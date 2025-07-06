@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { Navbar } from "../header/NavBar";
 import { useMainCarouselState } from "@/hooks/useMainCarouselState";

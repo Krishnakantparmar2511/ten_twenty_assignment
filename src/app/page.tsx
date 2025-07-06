@@ -1,4 +1,3 @@
-"use client";
 import { DragCarousel } from "@/components/organism/carousel/DragCarousel";
 import { MainCarousel } from "@/components/organism/carousel/MainCarousel";
 import React from "react";

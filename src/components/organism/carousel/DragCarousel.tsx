@@ -1,4 +1,4 @@
-
+"use client"
 import { useDragCarouselState } from "@/hooks/useDragCarouselState";
 import { draggableCarouselImages } from "core/utils/constants/constants";
 

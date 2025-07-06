@@ -18,7 +18,6 @@ export const useDragCarouselState = () => {
     isParagraphVisible: false,
   });
 
-  // Refs for DOM elements
   const carouselRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef(null);
   
