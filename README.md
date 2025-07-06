@@ -1,6 +1,6 @@
 # Project Documentation
 GitHub Repository: https://github.com/Krishnakantparmar2511/ten_twenty_assignment.git
-
+Deployed Link: https://ten-twenty-assignment.vercel.app/
 ##  Run Project
 
 1. **Check Node.js**: Make sure Node.js is installed. If not, download and install it from [nodejs.org](https://nodejs.org/en/download).
