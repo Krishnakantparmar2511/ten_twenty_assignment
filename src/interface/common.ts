@@ -17,6 +17,7 @@ export interface IUseMainCarouselState {
   isTransitioning: boolean;
   nextImageIndex: number;
   isLoaded: boolean;
+  counterIndex:number,
 }
 export interface IUseDragCarouselStateProps {
   currentClientSlide: number;

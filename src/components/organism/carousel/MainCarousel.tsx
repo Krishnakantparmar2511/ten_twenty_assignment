@@ -1,10 +1,13 @@
-import React  from "react";
+import React from "react";
 import { Navbar } from "../header/NavBar";
 import { useMainCarouselState } from "@/hooks/useMainCarouselState";
 import { mainCarouselImages } from "core/utils/constants/constants";
 
 export const MainCarousel: React.FC = () => {
-  const { state, nextIndex, nextImage } = useMainCarouselState();
+  const { state,  nextImage } = useMainCarouselState();
+
+
+  const previewImageIndex = (state.counterIndex + 1) % mainCarouselImages.length;
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
@@ -17,7 +20,8 @@ export const MainCarousel: React.FC = () => {
           alt={mainCarouselImages[state.currentIndex].alt}
           className="w-full h-full object-cover"
         />
-        {/* When New Image comes */}
+        
+        {/* Transitioning Image - only show during transition */}
         {state.isTransitioning && (
           <div
             className="absolute inset-0 overflow-hidden"
@@ -38,7 +42,7 @@ export const MainCarousel: React.FC = () => {
         <div className="absolute inset-0 flex items-center justify-start text-center z-10 px-6 md:px-32">
           <div className="">
             <p
-              className={`text-light text-start text-sm md:text-base mb-4 md:mb-6 font-worksans leading-tight transform transition-all duration-1000 ease-out delay-300 ${
+              className={`text-light text-start text-sm md:text-base mb-4 md:mb-6 font-worksans leading-tight transform transition-all duration-1000 ease-out delay-100 ${
                 state.isLoaded
                   ? "translate-y-0 opacity-100"
                   : "translate-y-16 opacity-0"
@@ -47,7 +51,7 @@ export const MainCarousel: React.FC = () => {
               Welcome To TenTwenty Farms
             </p>
             <h1
-              className={`text-light text-start text-[46px] md:text-[64px] font-worksans leading-tight transform transition-all duration-1000 ease-out ${
+              className={`text-light text-start text-[46px] md:text-[64px] font-worksans leading-tight transform transition-all duration-1000 ease-out delay-200 ${
                 state.isLoaded
                   ? "translate-y-0 opacity-100"
                   : "translate-y-16 opacity-0"
@@ -62,7 +66,6 @@ export const MainCarousel: React.FC = () => {
                   : "translate-y-16 opacity-0"
               }`}
             >
-              {" "}
               To Your Hands
             </h1>
           </div>
@@ -92,20 +95,8 @@ export const MainCarousel: React.FC = () => {
             <div className="relative flex items-center justify-center w-[115px] h-[115px] md:w-[138px] md:h-[138px]">
               <div className="w-[77px] h-[77px] md:w-[93px] md:h-[93px] relative z-10">
                 <img
-                  src={
-                    mainCarouselImages[
-                      state.isTransitioning
-                        ? (state.nextImageIndex + 1) % mainCarouselImages.length
-                        : nextIndex
-                    ].image
-                  }
-                  alt={
-                    mainCarouselImages[
-                      state.isTransitioning
-                        ? (state.nextImageIndex + 1) % mainCarouselImages.length
-                        : nextIndex
-                    ].alt
-                  }
+                  src={mainCarouselImages[previewImageIndex].image}
+                  alt={mainCarouselImages[previewImageIndex].alt}
                   className="w-full h-full object-cover"
                 />
 
@@ -147,7 +138,7 @@ export const MainCarousel: React.FC = () => {
 
           <div className="flex items-center space-x-[17px] text-light ml-[33px]">
             <span className="text-xs md:text-sm font-light font-worksans">
-              {String(state.currentIndex + 1).padStart(2, "0")}
+              {String(state.counterIndex + 1).padStart(2, "0")}
             </span>
             <div className="w-[100px] h-px bg-light"></div>
             <span className="text-xs md:text-sm">

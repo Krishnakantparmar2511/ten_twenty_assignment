@@ -1,9 +1,8 @@
 "use client";
 
-
 import { IUseMainCarouselState } from "@/interface/common";
 import { mainCarouselImages } from "core/utils/constants/constants";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export const useMainCarouselState = () => {
   // Initialize state for main carousel functionality
@@ -13,7 +12,14 @@ export const useMainCarouselState = () => {
     isTransitioning: false, 
     nextImageIndex: 1,      
     isLoaded: false,        
+    counterIndex:0
   });
+
+
+
+  // Refs to manage timeouts
+  const transitionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const updateState = (updates: Partial<IUseMainCarouselState>) => {
     setState((prev) => ({
@@ -22,8 +28,6 @@ export const useMainCarouselState = () => {
     }));
   };
 
-  // Calculate next image index
-  const nextIndex = (state.currentIndex + 1) % mainCarouselImages.length;
 
   // Trigger initial load animation
   useEffect(() => {
@@ -35,27 +39,30 @@ export const useMainCarouselState = () => {
   }, []);
 
 
+
+  // Start progress timer - runs continuously
   useEffect(() => {
     const progressInterval = setInterval(() => {
       setState((prev) => {
         if (prev.progress >= 100) {
           const nextIdx = (prev.currentIndex + 1) % mainCarouselImages.length;
-
-
-          setTimeout(() => {
-            setState((prev) => ({
-              ...prev,
-              currentIndex: nextIdx,
-              isTransitioning: false,
-              progress: 0,
-            }));
-          }, 3500);
+          
+          if (!prev.isTransitioning) {
+            setTimeout(() => {
+              setState((current) => ({
+                ...current,
+                currentIndex: nextIdx, 
+                isTransitioning: false,
+              }));
+            }, 3500);
+          }
+updateState({counterIndex:nextIdx});
 
           return {
             ...prev,
             nextImageIndex: nextIdx,
             isTransitioning: true,
-            progress: 0,
+            progress: 0, 
           };
         }
 
@@ -66,22 +73,39 @@ export const useMainCarouselState = () => {
       });
     }, 100);
 
-    return () => clearInterval(progressInterval);
-  }, [mainCarouselImages.length]);
+
+    progressIntervalRef.current = progressInterval;
+    
+    return () => {
+      clearInterval(progressInterval);
+    };
+  }, []);
 
   // Manually triggering next image
   const nextImage = () => {
     const nextIdx = (state.currentIndex + 1) % mainCarouselImages.length;
-    updateState({ nextImageIndex: nextIdx, isTransitioning: true });
+    
 
-    setTimeout(() => {
-      updateState({
+    if (transitionTimeoutRef.current) {
+      clearTimeout(transitionTimeoutRef.current);
+    }
+    updateState({counterIndex:nextIdx});
+    
+    setState(prev => ({
+      ...prev,
+      nextImageIndex: nextIdx,
+      isTransitioning: true,
+      progress: 0, 
+    }));
+
+    transitionTimeoutRef.current = setTimeout(() => {
+      setState(prev => ({
+        ...prev,
         currentIndex: nextIdx,
-        progress: 0,
         isTransitioning: false,
-      });
+      }));
     }, 3500);
   };
 
-  return { state, updateState, nextIndex, nextImage };
+  return { state, updateState,  nextImage };
 };
