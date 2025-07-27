@@ -49,7 +49,7 @@ export const MainCarousel: React.FC = () => {
                   : "translate-y-16 opacity-0"
               }`}
             >
-              Welcome To TenTwenty Farms
+              Welcome To Green Farms
             </p>
             <h1
               className={`text-light text-start text-[46px] md:text-[64px] font-worksans leading-tight transform transition-all duration-1000 ease-out delay-200 ${
